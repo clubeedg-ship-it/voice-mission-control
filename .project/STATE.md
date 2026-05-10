@@ -15,9 +15,13 @@ runtime:
   key_deps: mlx, mlx-whisper, mlx-lm, dspy, fastapi, tauri v2, react
 
 truths:
-  - Architecture doc drafted (system-architecture.md) — defines 4-stage pipeline: capture → context parse → intent reification → remote dispatch
-  - CLAUDE.md committed 2026-05-10 — two lanes (BACKEND / FRONTEND), invariants locked
-  - .project/ framework scaffolded 2026-05-10 — 7 files: STATE, QUEUE, HANDOFF, WORKSTREAMS, RETRIEVAL, DECISIONS, DOCS-MAP
+  - Architecture doc committed (system-architecture.md) — 4-stage pipeline: capture → context parse → intent reification → remote dispatch
+  - CLAUDE.md committed with 8 behavioral rules adapted from Karpathy/Chang 12-rule template
+  - .project/ framework scaffolded — 7 files: STATE, QUEUE, HANDOFF, WORKSTREAMS, RETRIEVAL, DECISIONS, DOCS-MAP
+  - Backend package structure in place — core/, logic/, dispatchers/, memory/
+  - pyproject.toml defines all Python deps; coding assistant can `pip install -e .`
+  - Sample project context at backend/memory/projects/solyx.json — defines schema shape
+  - Global rules at backend/memory/global_rules.json — defines output format contract
   - All inference is local via MLX; no cloud LLM dependency (D-001)
   - Two lanes only: backend + frontend; IPC is an invariant, not a lane (D-002)
   - Hermes agents are remote; this system is the voice terminal only
@@ -27,8 +31,8 @@ blockers:
   - none (ready for BACK.P1)
 
 focus:
-  current_milestone: M0-SCAFFOLD (done) → M1-CORE next
-  next_milestone: M1-CORE (standalone STT proof — Whisper via MLX, no UI)
+  current_milestone: M1-CORE (standalone STT proof — Whisper via MLX, no UI)
+  next_milestone: M2-REFINE (add Qwen refiner + DSPy IntentReification, context manager)
 
 milestones:
   M0-SCAFFOLD: docs, .project/ framework, repo discipline — DONE
@@ -45,4 +49,11 @@ retrieval:
   docs_map: .project/DOCS-MAP.md
 
 recent:
-  - 2026-05-10: SCAFFOLD.P0 done — CLAUDE.md + .project/ framework (STATE, QUEUE, HANDOFF, WORKSTREAMS, RETRIEVAL, DECISIONS with D-001/D-002, DOCS-MAP). 8 commits on main.
+  - 2026-05-10: SCAFFOLD.P0 done — full repo scaffold committed:
+    - CLAUDE.md (boot sequence + lanes + invariants + 8 behavioral rules)
+    - .project/ framework (STATE, QUEUE, HANDOFF, WORKSTREAMS, RETRIEVAL, DECISIONS, DOCS-MAP)
+    - system-architecture.md (pipeline design from architecture doc)
+    - backend/ package structure (core/, logic/, dispatchers/, memory/)
+    - backend/memory/ (global_rules.json + projects/solyx.json sample)
+    - pyproject.toml (mlx, mlx-whisper, mlx-lm, dspy, fastapi, uvicorn, httpx)
+    - .gitignore (Python, Node/Tauri, MLX models)
