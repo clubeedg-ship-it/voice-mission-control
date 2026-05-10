@@ -25,3 +25,15 @@ Settled decisions. Reference by ID (e.g. D-001) in other docs.
 **Rationale:** Integration is the interface *between* the two lanes, not independent work. A third lane would create ownership ambiguity — who owns the API schema? With two lanes, the backend owns the API surface and the frontend consumes it.
 
 **Consequences:** Backend must stabilize the sidecar API (BACK.P5) before frontend work starts. Changes to the IPC contract require updating CLAUDE.md invariants.
+
+---
+
+## D-003 — Native macOS app via Tauri, no containerization (2026-05-10)
+
+**Context:** Whether to containerize the application or run natively.
+
+**Decision:** No containers. The application runs natively on macOS as a Tauri `.app` bundle. The Python sidecar (FastAPI + MLX models) is bundled inside the `.app` package. The final product is a single application the user finds via Spotlight, launches from the dock, and never thinks about dependencies.
+
+**Rationale:** MLX requires Metal (Apple's GPU framework) which is unavailable inside Docker on macOS — Docker Desktop runs a Linux VM, so Metal, the Neural Engine, and hardware microphone access are all cut off. Containerization would break the three pillars of the architecture: local inference, low-latency audio capture, and native OS integration (global hotkey, overlay window). Tauri's bundling already provides the isolation containers would give — the `.app` contains the frontend, the Rust shell, and the Python sidecar with a vendored venv.
+
+**Consequences:** No Docker, no docker-compose, no Dockerfile in this repo. Development setup is `python -m venv .venv && pip install -e .` on the host machine. The coding assistant must not introduce container-based workflows. VRAM measurement must use `sudo powermetrics --samplers gpu_power` or Activity Monitor, not container-level metrics. Distribution is a `.app` bundle built by `tauri build`, not a container image.
