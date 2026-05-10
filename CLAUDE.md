@@ -10,6 +10,8 @@
 Local voice-to-agent interface for M4 Air (16GB). Captures speech, transcribes
 via MLX-Whisper, refines intent with a local LLM (Qwen 2.5-3B 4-bit via MLX),
 and dispatches structured commands to remote Hermes agents via webhook.
+Ships as a native macOS `.app` via Tauri — Spotlight-searchable, self-contained,
+no user-facing dependencies.
 
 ## Lanes
 
@@ -20,6 +22,7 @@ and dispatches structured commands to remote Hermes agents via webhook.
 
 ## Invariants
 
+- Native macOS only — no Docker, no containers, no VMs (D-003). MLX requires Metal.
 - Total VRAM footprint ≤ 8.5 GB (Whisper ~1.6 GB + Qwen ~1.8 GB + system ~5 GB)
 - All inference local — no cloud LLM calls in the pipeline
 - Models stay resident in memory after startup; no cold-load per request
@@ -28,6 +31,17 @@ and dispatches structured commands to remote Hermes agents via webhook.
 - STT latency target < 500ms for 10s clips; refinement < 1.2s
 - Project contexts are siloed — LLM only sees the active project file
 - One lane per packet; do not mix frontend and backend work
+
+## Dev setup
+
+```bash
+cd /Users/ottogen/voice-mission-control
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
+
+VRAM measurement: `sudo powermetrics --samplers gpu_power -i 1000`
 
 ## Retrieval
 
