@@ -1,0 +1,28 @@
+[project]
+name = "voice-mission-control"
+version = "0.1.0"
+description = "Local voice-to-agent interface for M4 Air — MLX inference + DSPy refinement"
+requires-python = ">=3.11"
+dependencies = [
+    "mlx>=0.22.0",
+    "mlx-whisper>=0.4.0",
+    "mlx-lm>=0.21.0",
+    "dspy>=2.6.0",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.34.0",
+    "httpx>=0.28.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.8.0",
+]
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
