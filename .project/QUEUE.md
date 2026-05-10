@@ -4,7 +4,7 @@ Packets map 1:1 to GitHub issues. Keep the `gh` column in sync.
 
 | id | lane | gh | title | status | deps | next_action |
 |---|---|---|---|---|---|---|
-| SCAFFOLD.P0 | — | — | Scaffold .project/ framework + CLAUDE.md | active | none | commit remaining .project/ files |
+| SCAFFOLD.P0 | — | — | Scaffold .project/ framework + CLAUDE.md | done | none | closed 2026-05-10 — all .project/ files committed |
 | BACK.P1 | backend | — | Python env + MLX model loading proof | todo | SCAFFOLD.P0 | create venv, install mlx-whisper + mlx-lm, verify both models load within VRAM budget |
 | BACK.P2 | backend | — | Standalone STT proof (mic → transcript) | todo | BACK.P1 | record audio, run through mlx-whisper, print transcript, measure latency |
 | BACK.P3 | backend | — | Refiner engine + DSPy IntentReification | todo | BACK.P2 | load Qwen 2.5-3B 4-bit, wire DSPy ChainOfThought, test with hardcoded transcripts |
