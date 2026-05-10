@@ -24,6 +24,8 @@ truths:
   - Global rules at backend/memory/global_rules.json — defines output format contract
   - All inference is local via MLX; no cloud LLM dependency (D-001)
   - Two lanes only: backend + frontend; IPC is an invariant, not a lane (D-002)
+  - Native macOS only — no Docker, no containers; MLX requires Metal on host (D-003)
+  - Ships as Tauri .app bundle — Spotlight-searchable, self-contained, no user-facing deps
   - Hermes agents are remote; this system is the voice terminal only
   - Solo operator: user + Claude agents
 
@@ -49,11 +51,5 @@ retrieval:
   docs_map: .project/DOCS-MAP.md
 
 recent:
-  - 2026-05-10: SCAFFOLD.P0 done — full repo scaffold committed:
-    - CLAUDE.md (boot sequence + lanes + invariants + 8 behavioral rules)
-    - .project/ framework (STATE, QUEUE, HANDOFF, WORKSTREAMS, RETRIEVAL, DECISIONS, DOCS-MAP)
-    - system-architecture.md (pipeline design from architecture doc)
-    - backend/ package structure (core/, logic/, dispatchers/, memory/)
-    - backend/memory/ (global_rules.json + projects/solyx.json sample)
-    - pyproject.toml (mlx, mlx-whisper, mlx-lm, dspy, fastapi, uvicorn, httpx)
-    - .gitignore (Python, Node/Tauri, MLX models)
+  - 2026-05-10: SCAFFOLD.P0 done — full repo scaffold committed
+  - 2026-05-10: D-003 landed — native macOS only, no containers. MLX requires Metal. Tauri bundles everything into a .app. Dev setup is venv + pip install -e . on the host.
