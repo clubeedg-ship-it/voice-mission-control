@@ -33,3 +33,46 @@ and dispatches structured commands to remote Hermes agents via webhook.
 
 - Prefer CLI retrieval over repo-wide searching
 - GitHub issues are authoritative for packets; `.project/QUEUE.md` mirrors them
+
+## Behavioral rules
+
+These apply to every task. Bias caution over speed on non-trivial work.
+
+### Think before coding
+State assumptions explicitly. If uncertain, ask rather than guess.
+If a simpler approach exists, say so before writing the complex one.
+Stop when confused. Name what's unclear.
+
+### Simplicity first
+Minimum code that solves the problem. Nothing speculative.
+No abstractions for single-use code — especially DSPy modules.
+If a plain function does the job, don't wrap it in a class.
+
+### Surgical changes
+Touch only what the packet scopes. Don't "improve" adjacent files.
+Editing stt_engine.py is not an invitation to refactor refiner_engine.py.
+Match the style of the file you're in.
+
+### Read before you write
+Before adding code in a file, read its exports and its callers.
+The pipeline stages (STT → context → refiner → dispatch) are tightly coupled.
+Writing one stage without understanding what the previous stage outputs will break the chain.
+
+### Surface conflicts, don't average them
+If mlx-whisper and mlx-lm expect different patterns (imports, config, error handling),
+pick one and flag the other. Don't blend two styles into a third.
+
+### Checkpoint after every significant step
+After each step in a multi-step task: summarize what's done, what's verified, what's left.
+Don't continue from a state you can't describe back.
+If you lose track, stop and restate.
+
+### Match conventions once they exist
+After BACK.P2, the codebase has conventions. Follow them.
+If you think a convention is harmful, say so explicitly. Don't fork it silently.
+
+### Fail loud
+"Model loaded" is wrong if VRAM wasn't measured.
+"Transcription works" is wrong if latency wasn't timed.
+"Tests pass" is wrong if any were skipped.
+Default to surfacing uncertainty, not hiding it.
